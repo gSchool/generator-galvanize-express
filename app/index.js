@@ -11,8 +11,8 @@ var GalvanizeExpreessGenerator = yeoman.generators.Base.extend({
   },
 
   createApp: function(){
-    this.copy('client/public/js/main.js', 'client/public/js/main.js');
-    this.copy('client/public/css/main.css', 'client/public/css/main.css');
+    this.copy('client/js/main.js', 'client/js/main.js');
+    this.copy('client/css/main.css', 'client/css/main.css');
     this.copy('server/bin/www', 'server/bin/www');
     this.copy('server/routes/index.js', 'server/routes/index.js');
     this.copy('server/views/error.html', 'server/views/error.html');
