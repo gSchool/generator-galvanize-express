@@ -1,6 +1,6 @@
 {
   "name": "generator-galvanize-express",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Yeoman generator for a basic Node/Express app.",
   "author": "Michael Herman",
   "license": "ISC",
