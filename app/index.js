@@ -11,14 +11,14 @@ var GalvanizeExpreessGenerator = yeoman.generators.Base.extend({
   },
 
   createApp: function(){
-    this.copy('client/js/main.js', 'client/js/main.js');
-    this.copy('client/css/main.css', 'client/css/main.css');
-    this.copy('server/bin/www', 'server/bin/www');
-    this.copy('server/routes/index.js', 'server/routes/index.js');
-    this.copy('server/views/error.html', 'server/views/error.html');
-    this.copy('server/views/index.html', 'server/views/index.html');
-    this.copy('server/views/layout.html', 'server/views/layout.html');
-    this.copy('server/app.js', 'server/app.js');
+    this.copy('./src/client/js/main.js', './src/client/js/main.js');
+    this.copy('./src/client/css/main.css', './src/client/css/main.css');
+    this.copy('./src/server/bin/www', './src/server/bin/www');
+    this.copy('./src/server/routes/index.js', './src/server/routes/index.js');
+    this.copy('./src/server/views/error.html', './src/server/views/error.html');
+    this.copy('./src/server/views/index.html', './src/server/views/index.html');
+    this.copy('./src/server/views/layout.html', './src/server/views/layout.html');
+    this.copy('./src/server/app.js', './src/server/app.js');
     this.copy('package.json');
     this.copy('_gitignore', '.gitignore');
     this.copy('gulpfile.js', 'gulpfile.js');
