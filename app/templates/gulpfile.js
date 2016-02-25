@@ -9,8 +9,8 @@ var reload = browserSync.reload;
 var nodemon = require('gulp-nodemon');
 var connect = require('gulp-connect');
 var uglify = require('gulp-uglify');
-var minifyCSS = require('gulp-minify-css');
-var clean = require('gulp-clean');
+var cleanCSS = require('gulp-clean-css');
+var clean = require('gulp-rimraf');
 var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 
@@ -86,14 +86,14 @@ gulp.task('watch', function() {
 });
 
 gulp.task('clean', function() {
-  gulp.src('./dist/*')
-    .pipe(clean({force: true}));
+  return gulp.src('./dist/*')
+    .pipe(rimraf({force: true}));
 });
 
 gulp.task('minify-css', function() {
-  var opts = {comments:true, spare:true};
-  gulp.src(paths.styles)
-    .pipe(minifyCSS(opts))
+  var opts = {keepSpecialComments:'*'};
+  return gulp.src(paths.styles)
+    .pipe(cleanCSS(opts))
     .pipe(gulp.dest('./dist/client/css/'));
 });
 
