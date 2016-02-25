@@ -133,6 +133,6 @@ gulp.task('default', ['browser-sync', 'watch'], function(){});
 gulp.task('build', function() {
   runSequence(
     ['clean'],
-    ['lint', 'minify-css', 'minify-js', 'copy-server-files', 'connectDist']
+    ['lint', 'clean-css', 'minify-js', 'copy-server-files', 'connectDist']
   );
 });
