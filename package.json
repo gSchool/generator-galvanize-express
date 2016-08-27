@@ -2,19 +2,49 @@
   "name": "generator-galvanize-express",
   "version": "0.9.3",
   "description": "Yeoman generator for a basic Node/Express app.",
-  "author": "Michael Herman",
-  "license": "ISC",
-  "repository": "https://github.com/gSchool/generator-galvanize-express",
+  "homepage": "https://github.com/gSchool/generator-galvanize-express",
+  "author": {
+    "name": "Michael Herman",
+    "email": "michael@mherman.org",
+    "url": "mherman.org"
+  },
   "files": [
-    "app"
+    "generators"
   ],
-  "main": "app/index.js",
+  "main": "generators/index.js",
   "keywords": [
-    "yeoman-generator",
-    "galvanize"
+    "",
+    "yeoman-generator"
   ],
   "dependencies": {
-    "chalk": "^1.1.0",
-    "yeoman-generator": "^0.20.2"
-  }
+    "yeoman-generator": "^0.23.0",
+    "chalk": "^1.0.0",
+    "yosay": "^1.0.0"
+  },
+  "devDependencies": {
+    "yeoman-test": "^1.0.0",
+    "yeoman-assert": "^2.0.0",
+    "eslint": "^3.1.1",
+    "eslint-config-xo-space": "^0.14.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^2.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-line-ending-corrector": "^1.0.1",
+    "gulp-istanbul": "^1.0.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "mocha": true
+    }
+  },
+  "repository": "git@github.com:gSchool/generator-galvanize-express.git",
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "MIT"
 }
