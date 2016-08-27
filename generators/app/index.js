@@ -43,6 +43,10 @@
         this.templatePath('src/'),
         this.destinationPath('src/')
       );
+      this.fs.copy(
+        this.templatePath('test/'),
+        this.destinationPath('test/')
+      );
     }
   });
 

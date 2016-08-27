@@ -1,5 +1,5 @@
 {
-  "name": "herman-express",
+  "name": "update-me",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -22,7 +22,6 @@
     "chai-http": "^3.0.0",
     "mocha": "^3.0.2",
     "mocha-jscs": "^5.0.1",
-    "mocha-jshint": "^2.3.1",
-    "run-sequence": "^1.2.2"
+    "mocha-jshint": "^2.3.1"
   }
 }
