@@ -18,7 +18,7 @@
         this.destinationPath('.env')
       );
       this.fs.copy(
-        this.templatePath('.gitignore'),
+        this.templatePath('dot-gitignore'),
         this.destinationPath('.gitignore')
       );
       this.fs.copy(
