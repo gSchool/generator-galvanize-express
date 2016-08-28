@@ -37,6 +37,10 @@
         this.templatePath('package.json'),
         this.destinationPath('package.json')
       );
+      this.fs.copy(
+        this.templatePath('gulpfile.js'),
+        this.destinationPath('gulpfile.js')
+      );
     },
     writingFolders: function () {
       this.fs.copy(

@@ -7,11 +7,15 @@
 1. Install [Mocha](http://mochajs.org/) and [Chai](http://chaijs.com/) (if necessary) - `npm install -g mocha chai`
 1. Install [Yeoman](http://yeoman.io) (if necessary) - `npm install -g yo`
 1. Install [Gulp](http://gulpjs.com/) (if necessary) - `npm install -g gulp`
-1. Install the generator - `npm install -g generator-galvanize-html`
-1. Run - `yo galvanize-html` and after adding a *.gitignore* run `npm install
+1. Install the generator - `npm install -g generator-galvanize-express`
+1. Run - `yo galvanize-express` and then `npm install
 
 > All files must be placed in the "src" directory!
 
 ## Run
 
 1. `gulp`
+
+## Test
+
+1. 'npm test'
