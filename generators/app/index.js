@@ -16,6 +16,12 @@
           name: 'name',
           message: 'What\'s your name?',
           required: true
+        },
+        {
+          type: 'confirm',
+          name: 'notify',
+          message: 'Do you want to use Gulp Notify?',
+          default: false
         }
       ];
       return this.prompt(prompts).then(function (props) {
@@ -44,14 +50,25 @@
         this.templatePath('.travis.yml'),
         this.destinationPath('.travis.yml')
       );
-      this.fs.copy(
-        this.templatePath('package.json'),
-        this.destinationPath('package.json')
-      );
-      this.fs.copy(
-        this.templatePath('gulpfile.js'),
-        this.destinationPath('gulpfile.js')
-      );
+      if (this.props.notify) {
+        this.fs.copy(
+          this.templatePath('package_notify.json'),
+          this.destinationPath('package.json')
+        );
+        this.fs.copy(
+          this.templatePath('gulpfile_notify.js'),
+          this.destinationPath('gulpfile.js')
+        );
+      } else {
+        this.fs.copy(
+          this.templatePath('package.json'),
+          this.destinationPath('package.json')
+        );
+        this.fs.copy(
+          this.templatePath('gulpfile.js'),
+          this.destinationPath('gulpfile.js')
+        );
+      }
       this.fs.copyTpl(
         this.templatePath('LICENSE'),
         this.destinationPath('LICENSE'),
