@@ -11,6 +11,17 @@
       this.log(yosay(
         'Welcome to the finest ' + chalk.red('generator-galvanize-express') + ' generator!'
       ));
+      var prompts = [
+        {
+          name: 'name',
+          message: 'What\'s your name?',
+          required: true
+        }
+      ];
+      return this.prompt(prompts).then(function (props) {
+        // To access props later use this.props.someAnswer;
+        this.props = props;
+      }.bind(this));
     },
     writingFiles: function () {
       this.fs.copy(
@@ -40,6 +51,14 @@
       this.fs.copy(
         this.templatePath('gulpfile.js'),
         this.destinationPath('gulpfile.js')
+      );
+      this.fs.copyTpl(
+        this.templatePath('LICENSE'),
+        this.destinationPath('LICENSE'),
+        {
+          year: (new Date()).getFullYear(),
+          name: this.props.name
+        }
       );
     },
     writingFolders: function () {
