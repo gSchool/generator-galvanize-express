@@ -1,27 +1,27 @@
 process.env.NODE_ENV = 'test';
 
-var chai = require('chai');
-var should = chai.should();
-var chaiHttp = require('chai-http');
+const chai = require('chai');
+const should = chai.should();
+const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
-var server = require('../../src/server/app');
+const server = require('../../src/server/app');
 
-describe('routes : index', function() {
+describe('routes : index', () => {
 
-  beforeEach(function(done) {
+  beforeEach((done) => {
     done();
   });
 
-  afterEach(function(done) {
+  afterEach((done) => {
     done();
   });
 
-  describe('GET /', function() {
-    it('should render the index', function(done) {
+  describe('GET /', () => {
+    it('should render the index', (done) => {
       chai.request(server)
       .get('/')
-      .end(function(err, res) {
+      .end((err, res) => {
         res.redirects.length.should.equal(0);
         res.status.should.equal(200);
         res.type.should.equal('text/html');
@@ -32,11 +32,11 @@ describe('routes : index', function() {
     });
   });
 
-  describe('GET /404', function() {
-    it('should throw an error', function(done) {
+  describe('GET /404', () => {
+    it('should throw an error', (done) => {
       chai.request(server)
       .get('/404')
-      .end(function(err, res) {
+      .end((err, res) => {
         res.redirects.length.should.equal(0);
         res.status.should.equal(404);
         res.type.should.equal('application/json');

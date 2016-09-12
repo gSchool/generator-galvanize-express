@@ -2,16 +2,16 @@
 
   'use strict';
 
-  var yeoman = require('yeoman-generator');
-  var chalk = require('chalk');
-  var yosay = require('yosay');
+  const yeoman = require('yeoman-generator');
+  const chalk = require('chalk');
+  const yosay = require('yosay');
 
   module.exports = yeoman.Base.extend({
-    prompting: function () {
+    prompting: function() {
       this.log(yosay(
         'Welcome to the finest ' + chalk.red('generator-galvanize-express') + ' generator!'
       ));
-      var prompts = [
+      const prompts = [
         {
           name: 'name',
           message: 'What\'s your name?',
@@ -22,14 +22,27 @@
           name: 'notify',
           message: 'Do you want to use Gulp Notify?',
           default: false
+        },
+        {
+          type: 'confirm',
+          name: 'knex',
+          message: 'Do you want to use Knex?',
+          default: true
+        },
+        {
+          when: function(response) {
+            return response.knex;
+          },
+          name: 'database',
+          message: 'What\'s the name of the db?'
         }
       ];
-      return this.prompt(prompts).then(function (props) {
+      return this.prompt(prompts).then(function(props) {
         // To access props later use this.props.someAnswer;
         this.props = props;
       }.bind(this));
     },
-    writingFiles: function () {
+    writingFiles: function() {
       this.fs.copy(
         this.templatePath('.env'),
         this.destinationPath('.env')
@@ -52,23 +65,28 @@
       );
       if (this.props.notify) {
         this.fs.copy(
-          this.templatePath('package_notify.json'),
-          this.destinationPath('package.json')
-        );
-        this.fs.copy(
           this.templatePath('gulpfile_notify.js'),
           this.destinationPath('gulpfile.js')
         );
       } else {
         this.fs.copy(
-          this.templatePath('package.json'),
-          this.destinationPath('package.json')
-        );
-        this.fs.copy(
           this.templatePath('gulpfile.js'),
           this.destinationPath('gulpfile.js')
         );
       }
+      if (this.props.database) {
+        this.fs.copyTpl(
+          this.templatePath('knexfile.js'),
+          this.destinationPath('knexfile.js'),
+          {
+            database: this.props.database
+          }
+        );
+      }
+      this.fs.copy(
+        this.templatePath('package.json'),
+        this.destinationPath('package.json')
+      );
       this.fs.copyTpl(
         this.templatePath('LICENSE'),
         this.destinationPath('LICENSE'),
@@ -78,7 +96,7 @@
         }
       );
     },
-    writingFolders: function () {
+    writingFolders: function() {
       this.fs.copy(
         this.templatePath('src/'),
         this.destinationPath('src/')
@@ -87,6 +105,19 @@
         this.templatePath('test/'),
         this.destinationPath('test/')
       );
+      if (this.props.database) {
+        this.fs.copy(
+          this.templatePath('src/'),
+          this.destinationPath('src/')
+        );
+      }
+    },
+    removeFolders: function() {
+      if (!this.props.database) {
+        this.fs.delete(
+          this.destinationPath('src/server/db/knex.js')
+        );
+      }
     }
   });
 
