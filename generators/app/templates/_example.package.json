@@ -14,9 +14,7 @@
     "express": "~4.13.4",
     "express-session": "^1.14.0",
     "morgan": "~1.7.0",
-    "nunjucks": "^2.4.2",
-    "knex": "^0.11.10",
-    "pg": "6.1.0"
+    "nunjucks": "^2.4.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -31,8 +29,6 @@
     "mocha-jscs": "^5.0.1",
     "mocha-jshint": "^2.3.1",
     "run-sequence": "^1.2.2",
-    "tiny-lr": "^0.2.1",
-    "gulp-notify": "^2.2.0"
-  },
-  "name": "mike"
+    "tiny-lr": "^0.2.1"
+  }
 }

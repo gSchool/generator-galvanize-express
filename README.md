@@ -23,5 +23,4 @@
 
 ## To do
 
-1. Remove `gulp-notify`, `knex`, and `pg` from *package.json* if not used
-1. Make `pg-promise` an option
+1. Write tests

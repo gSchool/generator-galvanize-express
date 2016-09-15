@@ -5,17 +5,26 @@
   const yeoman = require('yeoman-generator');
   const chalk = require('chalk');
   const yosay = require('yosay');
+  const fs = require('fs');
+  const path = require('path');
 
   module.exports = yeoman.Base.extend({
     prompting: function() {
       this.log(yosay(
-        'Welcome to the finest ' + chalk.red('generator-galvanize-express') + ' generator!'
+        'Welcome to the finest ' + chalk.red('ExpressJS') + ' generator on the market!'
       ));
       const prompts = [
         {
           name: 'name',
-          message: 'What\'s your name?',
-          required: true
+          message: 'Your name (for the LICENSE)?',
+          required: true,
+          default: 'Change Me'
+        },
+        {
+          name: 'project',
+          message: 'Project name (for package.json)?',
+          required: true,
+          default: 'Change Me'
         },
         {
           type: 'confirm',
@@ -24,23 +33,72 @@
           default: false
         },
         {
-          type: 'confirm',
-          name: 'knex',
-          message: 'Do you want to use Knex?',
-          default: true
+          type: 'list',
+          name: 'database',
+          message: 'Do you want to use pg-promise or Knex?',
+          choices: [
+            {
+              name: 'pg-promise',
+              value: 'pg-promise'
+            },
+            {
+              name: 'knex',
+              value: 'knex'
+            },
+            {
+              name: 'neither',
+              value: null
+            }
+          ],
+          default: 'neither'
         },
         {
           when: function(response) {
-            return response.knex;
+            if (response.database) {
+              return response.database;
+            }
           },
-          name: 'database',
-          message: 'What\'s the name of the db?'
+          name: 'databaseName',
+          message: 'Database name?'
         }
       ];
       return this.prompt(prompts).then(function(props) {
-        // To access props later use this.props.someAnswer;
         this.props = props;
       }.bind(this));
+    },
+    generatePackageDotJSON: function() {
+      const readFilePath = path.join(
+        __dirname, 'templates', '_example.package.json');
+      const writeFilePath = path.join(
+        __dirname, 'templates', 'package.json');
+      fs.readFile(readFilePath, (err, data) => {
+        if (err) {
+          throw err;
+        }
+        const jsonObject = JSON.parse(data);
+        jsonObject.name = this.props.project;
+        if (this.props.database) {
+          if (this.props.database === 'pg-promise') {
+            jsonObject.dependencies['pg-promise'] = '5.3.2';
+          } else if (this.props.database === 'knex') {
+            jsonObject.dependencies.knex = '^0.11.10';
+            jsonObject.dependencies.pg = '6.1.0';
+          }
+        }
+        if (this.props.notify) {
+          jsonObject.devDependencies['gulp-notify'] = '^2.2.0';
+        }
+        const stringifiedObject = JSON.stringify(jsonObject, null, 2);
+        fs.writeFile(writeFilePath, stringifiedObject, (err, data) => {
+          if (err) {
+            throw err;
+          }
+          this.fs.copy(
+            this.templatePath('package.json'),
+            this.destinationPath('package.json')
+          );
+        });
+      });
     },
     writingFiles: function() {
       this.fs.copy(
@@ -74,19 +132,6 @@
           this.destinationPath('gulpfile.js')
         );
       }
-      if (this.props.database) {
-        this.fs.copyTpl(
-          this.templatePath('knexfile.js'),
-          this.destinationPath('knexfile.js'),
-          {
-            database: this.props.database
-          }
-        );
-      }
-      this.fs.copy(
-        this.templatePath('package.json'),
-        this.destinationPath('package.json')
-      );
       this.fs.copyTpl(
         this.templatePath('LICENSE'),
         this.destinationPath('LICENSE'),
@@ -105,18 +150,30 @@
         this.templatePath('test/'),
         this.destinationPath('test/')
       );
-      if (this.props.database) {
-        this.fs.copy(
-          this.templatePath('src/'),
-          this.destinationPath('src/')
-        );
-      }
     },
-    removeFolders: function() {
-      if (!this.props.database) {
-        this.fs.delete(
-          this.destinationPath('src/server/db/knex.js')
-        );
+    createDatabase: function() {
+      if (this.props.database) {
+        if (this.props.database === 'pg-promise') {
+          this.fs.copyTpl(
+            this.templatePath('connection.js'),
+            this.destinationPath('src/server/db/connection.js'),
+            {
+              database: this.props.databaseName
+            }
+          );
+        } else if (this.props.database === 'knex') {
+          this.fs.copyTpl(
+            this.templatePath('knexfile.js'),
+            this.destinationPath('knexfile.js'),
+            {
+              database: this.props.databaseName
+            }
+          );
+          this.fs.copyTpl(
+            this.templatePath('knex.js'),
+            this.destinationPath('src/server/db/knex.js')
+          );
+        }
       }
     }
   });
