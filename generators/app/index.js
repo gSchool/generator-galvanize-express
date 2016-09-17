@@ -76,7 +76,8 @@
           throw err;
         }
         const jsonObject = JSON.parse(data);
-        jsonObject.name = this.props.project;
+        const sansSpaces = (this.props.project).replace(/\s/g, '');
+        jsonObject.name = sansSpaces;
         if (this.props.database) {
           if (this.props.database === 'pg-promise') {
             jsonObject.dependencies['pg-promise'] = '5.3.2';
@@ -155,7 +156,7 @@
       if (this.props.database) {
         if (this.props.database === 'pg-promise') {
           this.fs.copyTpl(
-            this.templatePath('connection.js'),
+            this.templatePath('_db.connection.pg.js'),
             this.destinationPath('src/server/db/connection.js'),
             {
               database: this.props.databaseName
@@ -170,8 +171,8 @@
             }
           );
           this.fs.copyTpl(
-            this.templatePath('knex.js'),
-            this.destinationPath('src/server/db/knex.js')
+            this.templatePath('_db.connection.knex.js'),
+            this.destinationPath('src/server/db/connection.js')
           );
         }
       }
