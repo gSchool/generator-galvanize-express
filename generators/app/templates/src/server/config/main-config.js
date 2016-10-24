@@ -10,6 +10,7 @@
   const flash = require('connect-flash');
   const morgan = require('morgan');
   const nunjucks = require('nunjucks');
+  const cors = require('cors');
 
   // *** view folders *** //
   const viewFolders = [
@@ -32,6 +33,7 @@
     if (process.env.NODE_ENV !== 'test') {
       app.use(morgan('dev'));
     }
+    app.use(cors());
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
