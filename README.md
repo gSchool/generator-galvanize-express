@@ -19,7 +19,7 @@
 
 ## Test
 
-1. 'npm test'
+1. `npm test`
 
 ## To do
 
